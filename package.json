@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^6.0.2",
+    "firebase": "^6.2.2",
+    "flamelink": "^0.19.13",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
@@ -31,13 +32,16 @@
       "last 1 safari version"
     ]
   },
-    "rules": {
-      "flamelink": {
-        ".read": "auth != null",
-        ".write": "auth != null",
-        "users": {
-          ".indexOn": ["id", "email"]
-        }
+  "rules": {
+    "flamelink": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "users": {
+        ".indexOn": [
+          "id",
+          "email"
+        ]
       }
     }
+  }
 }

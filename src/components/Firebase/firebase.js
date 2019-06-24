@@ -1,8 +1,9 @@
-import app from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import flamelink from 'flamelink';
 
-const config = {
+const firebaseConfig = {
     apiKey: "AIzaSyChZeSal81QvMU0Y-U5BP3jH5goPJJeZiA",
     authDomain: "my-react-redux-firebase-b6a87.firebaseapp.com",
     databaseURL: "https://my-react-redux-firebase-b6a87.firebaseio.com",
@@ -12,11 +13,13 @@ const config = {
     appId: "1:39504766556:web:5797684b7b44c022"
 };
 
+
 class Firebase {
     constructor() {
-        app.initializeApp(config);
-        this.auth = app.auth();
-        this.db = app.database();
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        this.app = flamelink({ firebaseApp });
+        this.auth = firebaseApp.auth();
+        this.db = firebaseApp.database();
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -32,7 +35,13 @@ class Firebase {
     doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
 
+    user = uid => this.db.ref(`users/${uid}`);
+
     users = () => this.db.ref('users');
+
+    getContent = () => {
+        return this.app.content.get('posts')
+    }
 }
 
 export default Firebase;

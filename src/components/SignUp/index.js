@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { PATH } from "../../constants/routes";
+import { PATH } from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 
@@ -32,8 +32,16 @@ class SignUpFormBase extends React.Component {
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
+                return this.props.firebase
+                    .user(authUser.user.uid)
+                    .set({
+                        username,
+                        email,
+                    });
+            })
+            .then(() => {
                 this.setState({ ...INITIAL_STATE });
-                this.props.history.push(PATH.HOME)
+                this.props.history.push(PATH.HOME);
             })
             .catch(error => {
                 this.setState({ error });

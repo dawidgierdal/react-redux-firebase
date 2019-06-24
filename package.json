@@ -30,5 +30,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+    "rules": {
+      "flamelink": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+        "users": {
+          ".indexOn": ["id", "email"]
+        }
+      }
+    }
 }

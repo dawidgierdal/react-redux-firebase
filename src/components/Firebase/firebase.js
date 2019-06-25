@@ -40,7 +40,11 @@ class Firebase {
     users = () => this.db.ref('users');
 
     getContent = () => {
-        return this.app.content.get('posts')
+        if(this.app){
+            this.app.content.get('posts')
+                .then(blogPosts => blogPosts)
+                .catch(error => console.error('Something went wrong while retrieving all the content. Details:', error));
+        }
     }
 }
 

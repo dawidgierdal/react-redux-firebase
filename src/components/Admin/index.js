@@ -28,9 +28,7 @@ class _AdminPage extends Component {
                 loading: false,
             });
         });
-        this.props.firebase.getContent()
-            .then(blogPosts => this.setState({ content: blogPosts }))
-            .catch(error => console.error('Something went wrong while retrieving all the content. Details:', error));
+        this.props.firebase.getContent();
     }
 
     componentWillUnmount() {

@@ -28,7 +28,9 @@ class _AdminPage extends Component {
                 loading: false,
             });
         });
-        this.props.firebase.getContent();
+        this.props.firebase.getContent()
+            .then(blogPosts => this.setState({ content: blogPosts }))
+            .catch(error => console.error('Something went wrong while retrieving all the content. Details:', error));
     }
 
     componentWillUnmount() {
@@ -37,7 +39,8 @@ class _AdminPage extends Component {
 
     render() {
         const { users, loading } = this.state;
-
+        const postData = Object.keys(this.state.content).map(key => this.state.content[key]);
+        const postToRender = postData.map((item, index) => <div key={index}>{item.content}{item.author}</div>);
         return (
             <div>
                 <h1>Admin</h1>
@@ -45,6 +48,7 @@ class _AdminPage extends Component {
                 {loading && <div>Loading ...</div>}
 
                 <UserList users={users} />
+                {postToRender}
             </div>
         );
     }
